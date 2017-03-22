@@ -1,0 +1,21 @@
+{
+  "name": "neighborbood-map",
+  "authors": [
+    "Fernando <fernandodof@gmail.com>"
+  ],
+  "description": "neighborhood map for udacity front-end nanodegree",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "^3.4.2",
+    "bootstrap": "^3.3.7"
+  }
+}
