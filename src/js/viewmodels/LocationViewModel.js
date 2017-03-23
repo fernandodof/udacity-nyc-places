@@ -22,7 +22,7 @@ var LocationViewModel = function(places) {
     self.filteredPlaces = ko.computed(function() {
         filteredVenueIds = [];
         return self.places().filter(function(place) {
-            if (place.title.indexOf(self.filter()) > -1) {
+            if (place.title.toLowerCase().indexOf(self.filter().toLowerCase()) > -1) {
                 filteredVenueIds.push(place.foursquareVenueId);
                 return place;
             }

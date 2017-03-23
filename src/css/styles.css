@@ -145,3 +145,9 @@
   width: 200px;
   height: 200px;
 }
+
+.error-map {
+    margin-top: 70px;
+    margin-left: 15px;
+    position: absolute;
+}

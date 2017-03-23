@@ -1,83 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>NYC Places</title>
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./css/styles.css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NYC Places</title>
 
-    </head>
-    <body>
-        <div id="wrapper" data-bind="css: { active: sidebarActive }">
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-        		<div class="container-fluid">
-        			<div class="navbar-header">
-                        <div  class="navbar-brand">
-                            <a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle" data-bind="click: toggleMenu">
-                                <i class="fa fa-bars"></i>
-                            </a>
-            				<a href="#">NYC Places</a>
-                        </div>
-        			</div>
-        			<div id="navbar" class="collapse navbar-collapse">
-        			</div><!--/.nav-collapse -->
-        		</div>
-        	</nav>
-            <!-- Sidebar -->
-            <div id="sidebar-wrapper">
-                <nav id="spy">
-                    <form class="navbar-form">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search places" data-bind="value: filter, valueUpdate: 'afterkeydown'">
-                        </div>
-                    </form>
-                    <ul class="sidebar-nav nav" data-bind="foreach: filteredPlaces">
-                        <li class="sidebar-brand" data-bind="click: $root.showPlaceDetails">
-                            <a href="#home" data-bind="text: title"></a>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+
+</head>
+
+<body>
+    <div id="wrapper" data-bind="css: { active: sidebarActive }">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <div class="navbar-brand">
+                        <a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle" data-bind="click: toggleMenu">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <a href="#">NYC Places</a>
+                    </div>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <nav id="spy">
+                <form class="navbar-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search places" data-bind="value: filter, valueUpdate: 'afterkeydown'">
+                    </div>
+                </form>
+                <ul class="sidebar-nav nav" data-bind="foreach: filteredPlaces">
+                    <li class="sidebar-brand" data-bind="click: $root.showPlaceDetails">
+                        <a href="#home" data-bind="text: title"></a>
+                    </li>
+                </ul>
+                <div data-bind="visible: filteredPlaces().length === 0">
+                    <ul class="sidebar-nav nav">
+                        <li class="sidebar-brand">
+                            <p id="no-places">No Places found :-(</p>
                         </li>
                     </ul>
-                    <div data-bind="visible: filteredPlaces().length === 0">
-                        <ul class="sidebar-nav nav">
-                            <li class="sidebar-brand">
-                                <p id="no-places">No Places found :-(</p>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <!-- Page content -->
-            <main id="page-content-wrapper">
-                <div class="page-content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12" id="map-column">
-                                <p data-bind="text: error"></p>
-                                <div id="map"></div>
-                            </div>
-                            <div class="col-md-12" id="place-details">
-                                <p data-bind="visible: foursquareName">Fousquare Info:</p>
-                                <p data-bind="text: foursquareName"></p>
-                                <p data-bind="text: foursquareRating"></p>
-                                <p data-bind="text: foursquareAddress"></p>
-                                <p data-bind="text: foursquareError"></p>
-                            </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Page content -->
+        <main id="page-content-wrapper">
+            <div class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12" id="map-column">
+                            <p class="error-map" data-bind="text: error"></p>
+                            <div id="map"></div>
+                        </div>
+                        <div class="col-md-12" id="place-details">
+                            <p data-bind="visible: foursquareName">Fousquare Info:</p>
+                            <p data-bind="text: foursquareName"></p>
+                            <p data-bind="text: foursquareRating"></p>
+                            <p data-bind="text: foursquareAddress"></p>
+                            <p data-bind="text: foursquareError"></p>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="../bower_components/knockout/dist/knockout.js"></script>
-        <script src="./js/mapsHandling.js"></script>
-        <script src="./js/viewmodels/LocationViewModel.js"></script>
-        <script src="./js/models/Place.js"></script>
-        <script src="./js/main.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GyL_UTcmRtojegJ2y1syJOpjjNHm9uk&libraries=places,drawing,geometry&callback=initMap" async defer onerror="mapError()"></script>
-  </body>
+            </div>
+        </main>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/knockout/dist/knockout.js"></script>
+    <script src="./js/mapsHandling.js"></script>
+    <script src="./js/viewmodels/LocationViewModel.js"></script>
+    <script src="./js/models/Place.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GyL_UTcmRtojegJ2y1syJOpjjNHm9uk&libraries=places,drawing,geometry&callback=initMap" async defer onerror="mapError()"></script>
+</body>
+
 </html>

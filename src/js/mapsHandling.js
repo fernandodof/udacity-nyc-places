@@ -57,7 +57,6 @@ function showMarkers(markers) {
 
 function refreshMarkers(venueIds) {
     hideMarkers();
-    console.log(venueIds);
     for (var i = 0; i < markers.length; i++) {
         if (venueIds.indexOf(markers[i].id) > -1) {
             markers[i].setVisible(true);
