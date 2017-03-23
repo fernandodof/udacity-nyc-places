@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    //initialize all places
+    //instanci
     ko.applyBindings(new LocationViewModel([{
         title: 'Blue Hill',
         foursquareVenueId: '3fd66200f964a52078e31ee3',
@@ -38,7 +38,7 @@
             lng: -73.9832045
         }
     }, {
-        title: 'Eleven Madison Park,',
+        title: 'Eleven Madison Park',
         foursquareVenueId: '457ebeaaf964a5203f3f1fe3',
         location: {
             lat: 40.746647,

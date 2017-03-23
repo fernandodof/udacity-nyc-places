@@ -1,5 +1,6 @@
 var map;
 var markers = [];
+var bounds;
 
 //Init map after google api os loaded
 function initMap(places) {
@@ -16,19 +17,17 @@ function initMap(places) {
 }
 
 //This Function to init markers after page load
-function initMarkers(places, firstTime) {
-    hideMarkers();
-    markers = [];
+function initMarkers(places) {
     var infoWindow = new google.maps.InfoWindow();
 
     for (var i = 0; i < places.length; i++) {
 
         // Create a marker per place, and put into markers array.
         var marker = new google.maps.Marker({
-            position: places[i].location(),
-            title: places[i].title(),
+            position: places[i].location,
+            title: places[i].title,
             animation: google.maps.Animation.DROP,
-            id: places[i].foursquareVenueId()
+            id: places[i].foursquareVenueId
         });
         // Push the marker to our array of markers.
         markers.push(marker);
@@ -42,27 +41,34 @@ function initMarkers(places, firstTime) {
 
     }
 
-    showMarkers(markers, firstTime);
+    showMarkers(markers);
 }
 
 // This function will loop through the markers array and display them all.
-function showMarkers(markers, firstTime) {
-    var bounds = new google.maps.LatLngBounds();
+function showMarkers(markers) {
+    bounds = new google.maps.LatLngBounds();
     // Extend the boundaries of the map for each marker and display the marker
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
         bounds.extend(markers[i].position);
     }
-    if (firstTime) {
-        map.fitBounds(bounds);
-    }
+    map.fitBounds(bounds);
+}
 
+function refreshMarkers(venueIds) {
+    hideMarkers();
+    console.log(venueIds);
+    for (var i = 0; i < markers.length; i++) {
+        if (venueIds.indexOf(markers[i].id) > -1) {
+            markers[i].setVisible(true);
+        }
+    }
 }
 
 //function to hide all markers
 function hideMarkers() {
     for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null); //Remove the marker from the map
+        markers[i].setVisible(false);
     }
 }
 
@@ -116,7 +122,7 @@ function populateInfoWindow(marker, infowindow) {
 function highlightMarker(venueId) {
     for (var i = 0; i < markers.length; i++) {
         if (markers[i].id === venueId) {
-            forsquareSearch(markers[i].id)
+            forsquareSearch(markers[i].id);
             toggleBounceMarker(markers[i]);
         }
     }
@@ -155,8 +161,12 @@ function forsquareSearch(venueId) {
         'data': $.param(params),
     }).done(function(data) {
         var venue = data.response.venue;
+
+        var name = venue.name || 'No name provided';
+        var rating = venue.rating || 'No rating provided';
+        var address = ((venue.location && venue.location.formattedAddress.length) ? venue.location.formattedAddress.join(', ') : 'No Address provided');
         //Set forsquare info on page
-        setForsquareInfo('Name: ' + venue.name, 'Rating: ' + venue.rating, 'Address: ' + venue.location.formattedAddress.join(', '));
+        setForsquareInfo('Name: ' + name, 'Rating: ' + rating, 'Address: ' + address);
     }).fail(function(data) {
         setForsquareError();
     });
